@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Privacy Policy — Croploo</title>
+<meta name="description" content="How Croploo collects, uses and protects your data." />
+<link rel="icon" href="assets/img/croploo_black.png" type="image/png" />
+<link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+<script>
+  (function () {
+    var saved = localStorage.getItem('croploo-theme');
+    if (saved === 'light' || saved === 'dark') {
+      document.documentElement.setAttribute('data-theme', saved);
+    } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches) {
+      document.documentElement.setAttribute('data-theme', 'light');
+    }
+  })();
+</script>
+
+<div class="blob-field" aria-hidden="true">
+  <span class="blob blob-1"></span>
+  <span class="blob blob-2"></span>
+  <span class="blob blob-3"></span>
+</div>
+
+<!-- ============ NAV ============ -->
+<header class="site-header">
+  <div class="container header-inner">
+    <a href="index.html#top" class="brand">
+      <img src="assets/img/logo_text_white.png" alt="Croploo" class="brand-mark logo-light" />
+      <img src="assets/img/logo_text_black.png" alt="Croploo" class="brand-mark logo-dark" />
+    </a>
+    <nav class="main-nav" aria-label="Main navigation">
+      <a href="index.html#features">Features</a>
+      <a href="index.html#screenshots">Screenshots</a>
+      <a href="index.html#markets">Markets</a>
+      <a href="index.html#sources">Data Sources</a>
+      <a href="index.html#pricing">Pricing</a>
+      <a href="index.html#download" class="nav-cta">Download</a>
+    </nav>
+    <button type="button" id="theme-toggle" class="theme-toggle" aria-label="Toggle color theme">
+      <span class="theme-toggle-track">
+        <span class="theme-toggle-thumb">
+          <svg class="icon-sun" viewBox="0 0 24 24" width="12" height="12" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round"/></svg>
+          <svg class="icon-moon" viewBox="0 0 24 24" width="12" height="12" aria-hidden="true"><path d="M20 14.5A8.5 8.5 0 1 1 9.5 4a7 7 0 0 0 10.5 10.5Z" fill="currentColor"/></svg>
+        </span>
+      </span>
+    </button>
+    <button type="button" class="menu-toggle" id="menu-toggle" aria-label="Open menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+  <nav class="mobile-nav" id="mobile-nav" aria-label="Mobile navigation">
+    <a href="index.html#features">Features</a>
+    <a href="index.html#screenshots">Screenshots</a>
+    <a href="index.html#markets">Markets</a>
+    <a href="index.html#sources">Data Sources</a>
+    <a href="index.html#pricing">Pricing</a>
+    <a href="index.html#download" class="nav-cta">Download</a>
+  </nav>
+</header>
+
+<main id="top">
+
+  <!-- ============ PAGE HERO ============ -->
+  <section class="page-hero">
+    <div class="container reveal reveal-scale in">
+      <p class="eyebrow">Legal</p>
+      <h1>Privacy Policy</h1>
+      <p>What we collect, why we collect it, and what we never do with it.</p>
+    </div>
+  </section>
+
+  <!-- ============ POLICY BODY ============ -->
+  <section class="section">
+    <div class="container">
+      <div class="prose reveal reveal-left">
+        <p class="updated">Last updated: July 2026</p>
+
+        <h2>1. Overview</h2>
+        <p>This policy covers the Croploo desktop, web and mobile applications and the croploo.com marketing site (together, "Croploo", "we", "us"). Croploo is a market data terminal operated by Cultioo Inc. — the vast majority of data we process is public commodity market data (futures prices, USDA reports, weather, positioning data), not personal data. This policy focuses on the personal data tied to your account.</p>
+
+        <h2>2. Data we collect</h2>
+        <p>We collect the minimum needed to run your account and the terminal:</p>
+        <ul>
+          <li><strong>Account data</strong> — name, email address, username, and a hashed (never plaintext) password.</li>
+          <li><strong>Billing data</strong> — handled by Stripe. We store your subscription tier and a Stripe customer reference; Croploo never sees or stores your card number.</li>
+          <li><strong>Usage data</strong> — your watchlist, portfolio entries, custom alert rules, price targets, dashboard layouts, and decision-log entries, so the app can show them back to you across sessions and devices.</li>
+          <li><strong>CullyAI conversation history</strong> — chat messages you send to CullyAI are stored so it can reference earlier context in later sessions. You can ask us to delete this at any time.</li>
+          <li><strong>Technical data</strong> — basic request logs (IP address, timestamp, endpoint) kept briefly for security and abuse prevention.</li>
+        </ul>
+        <p>We do <strong>not</strong> collect data beyond this to build advertising profiles, and we do not sell personal data.</p>
+
+        <h2>3. How your data is used</h2>
+        <ul>
+          <li>To authenticate you and keep your session secure.</li>
+          <li>To sync your watchlist, portfolio, alerts and dashboards across the desktop and web app.</li>
+          <li>To process payments and manage your subscription, via Stripe.</li>
+          <li>To send account emails — verification codes, password resets, and (if you opt in) the daily Morning Brief — via Mailgun.</li>
+          <li>To give CullyAI context across sessions, and to let it summarize real market data into the Daily Brief and chat responses, via the Anthropic Claude API. Only the data needed to answer a given query is sent — we don't forward your whole account history on every request.</li>
+        </ul>
+
+        <h2>4. Third parties we work with</h2>
+        <p>Croploo is built on real, licensed or public data feeds. These providers may process limited technical data (like your request) as part of serving that data to the app — they do not receive your Croploo password, and most never see any personal data at all:</p>
+        <ul>
+          <li><strong>Stripe</strong> — billing and payments.</li>
+          <li><strong>Mailgun</strong> — transactional email delivery.</li>
+          <li><strong>Anthropic</strong> — powers CullyAI's chat, report analysis and Daily Brief generation.</li>
+          <li><strong>Alpha Vantage, USDA AMS &amp; NASS, EIA, CFTC, NOAA, FRED, Yahoo Finance, Financial Modeling Prep</strong> — market and public data feeds; these are one-way data sources into Croploo and never receive personal data about you.</li>
+        </ul>
+
+        <h2>5. Data retention</h2>
+        <p>Account and usage data is kept for as long as your account is active. If you close your account, we delete personal data within 30 days, except where we're required to retain billing records for tax or accounting purposes.</p>
+
+        <h2>6. Your rights</h2>
+        <p>You can access, correct, export or delete your account data at any time from Settings, or by emailing <a href="mailto:support@croploo.com">support@croploo.com</a>. Depending on where you live, this may include rights under GDPR, CCPA or similar regional laws — we honor these requests regardless of location.</p>
+
+        <h2>7. Security</h2>
+        <p>Passwords are hashed (PBKDF2), sessions use signed tokens, and all traffic between the app and our backend is encrypted in transit. If you believe you've found a security issue, please report it to <a href="mailto:security@croploo.com">security@croploo.com</a> rather than filing a public issue.</p>
+
+        <h2>8. Cookies &amp; local storage</h2>
+        <p>The web app and marketing site use local storage for your theme preference (dark/light) and session token — no third-party advertising or tracking cookies.</p>
+
+        <h2>9. Changes to this policy</h2>
+        <p>If we make a material change to this policy, we'll update the date at the top of this page and, for significant changes, notify account holders by email.</p>
+
+        <h2>10. Contact</h2>
+        <p>Questions about this policy or your data: <a href="mailto:support@croploo.com">support@croploo.com</a>, or see the <a href="contact.html">Contact page</a> for other channels.</p>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- ============ FOOTER WIDGET ============ -->
+<footer id="footer-widget" class="site-footer"></footer>
+<script src="js/footer.js"></script>
+
+<script>
+  (function () {
+    var btn = document.getElementById('theme-toggle');
+    if (btn) {
+      btn.addEventListener('click', function () {
+        var current = document.documentElement.getAttribute('data-theme') || 'dark';
+        var next = current === 'dark' ? 'light' : 'dark';
+        document.documentElement.setAttribute('data-theme', next);
+        localStorage.setItem('croploo-theme', next);
+      });
+    }
+    var menuBtn = document.getElementById('menu-toggle');
+    var mobileNav = document.getElementById('mobile-nav');
+    if (menuBtn && mobileNav) {
+      menuBtn.addEventListener('click', function () {
+        var open = mobileNav.classList.toggle('open');
+        menuBtn.classList.toggle('open', open);
+        menuBtn.setAttribute('aria-expanded', String(open));
+      });
+      mobileNav.querySelectorAll('a').forEach(function (a) {
+        a.addEventListener('click', function () {
+          mobileNav.classList.remove('open');
+          menuBtn.classList.remove('open');
+          menuBtn.setAttribute('aria-expanded', 'false');
+        });
+      });
+    }
+  })();
+</script>
+<script src="js/main.js"></script>
+</body>
+</html>

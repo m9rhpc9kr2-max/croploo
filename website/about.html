@@ -1,0 +1,175 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>About — Croploo</title>
+<meta name="description" content="Croploo is an AI-powered commodity market intelligence terminal built on real data, not simulations — for corn, wheat and soybean traders." />
+<link rel="icon" href="assets/img/croploo_black.png" type="image/png" />
+<link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+<script>
+  (function () {
+    var saved = localStorage.getItem('croploo-theme');
+    if (saved === 'light' || saved === 'dark') {
+      document.documentElement.setAttribute('data-theme', saved);
+    } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches) {
+      document.documentElement.setAttribute('data-theme', 'light');
+    }
+  })();
+</script>
+
+<div class="blob-field" aria-hidden="true">
+  <span class="blob blob-1"></span>
+  <span class="blob blob-2"></span>
+  <span class="blob blob-3"></span>
+</div>
+
+<!-- ============ NAV ============ -->
+<header class="site-header">
+  <div class="container header-inner">
+    <a href="index.html#top" class="brand">
+      <img src="assets/img/logo_text_white.png" alt="Croploo" class="brand-mark logo-light" />
+      <img src="assets/img/logo_text_black.png" alt="Croploo" class="brand-mark logo-dark" />
+    </a>
+    <nav class="main-nav" aria-label="Main navigation">
+      <a href="index.html#features">Features</a>
+      <a href="index.html#screenshots">Screenshots</a>
+      <a href="index.html#markets">Markets</a>
+      <a href="index.html#sources">Data Sources</a>
+      <a href="index.html#pricing">Pricing</a>
+      <a href="index.html#download" class="nav-cta">Download</a>
+    </nav>
+    <button type="button" id="theme-toggle" class="theme-toggle" aria-label="Toggle color theme">
+      <span class="theme-toggle-track">
+        <span class="theme-toggle-thumb">
+          <svg class="icon-sun" viewBox="0 0 24 24" width="12" height="12" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round"/></svg>
+          <svg class="icon-moon" viewBox="0 0 24 24" width="12" height="12" aria-hidden="true"><path d="M20 14.5A8.5 8.5 0 1 1 9.5 4a7 7 0 0 0 10.5 10.5Z" fill="currentColor"/></svg>
+        </span>
+      </span>
+    </button>
+    <button type="button" class="menu-toggle" id="menu-toggle" aria-label="Open menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+  <nav class="mobile-nav" id="mobile-nav" aria-label="Mobile navigation">
+    <a href="index.html#features">Features</a>
+    <a href="index.html#screenshots">Screenshots</a>
+    <a href="index.html#markets">Markets</a>
+    <a href="index.html#sources">Data Sources</a>
+    <a href="index.html#pricing">Pricing</a>
+    <a href="index.html#download" class="nav-cta">Download</a>
+  </nav>
+</header>
+
+<main id="top">
+
+  <!-- ============ PAGE HERO ============ -->
+  <section class="page-hero">
+    <div class="container reveal reveal-scale in">
+      <p class="eyebrow">About Croploo</p>
+      <h1>Built on real data, not demos.</h1>
+      <p>Croploo started from a simple frustration: every commodity trading tool we tried was either a spreadsheet, a Bloomberg-priced terminal, or a dashboard full of placeholder numbers. We wanted something in between — real basis, real futures, real USDA data, with an AI analyst that actually reads it for you.</p>
+    </div>
+  </section>
+
+  <!-- ============ REAL DATA CALLOUT ============ -->
+  <section class="section" style="padding: 56px 0;">
+    <div class="container">
+      <div class="fact-callout reveal reveal-scale">
+        <svg viewBox="0 0 24 24" width="26" height="26" aria-hidden="true"><path d="M12 2 4 5v6c0 5.5 3.8 8.5 8 11 4.2-2.5 8-5.5 8-11V5l-8-3Z" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linejoin="round"/><path d="M9 12l2 2 4-4" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <p><strong>Every number in Croploo comes from a real, live data source</strong> — USDA, Alpha Vantage, EIA, CFTC, NOAA and the others listed below. Nothing in the terminal is mocked, simulated, or placeholder data standing in for a feed we haven't built yet. If a data source doesn't exist for something yet, we leave that screen empty and say so, rather than fake it.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ STORY ============ -->
+  <section class="section">
+    <div class="container">
+      <div class="prose reveal reveal-left">
+        <h2>Why we built this</h2>
+        <p>Corn, wheat and soybean traders — from independent farmers hedging a harvest to desks managing storage positions — have historically had two options: expensive institutional terminals, or a patchwork of free tools that don't talk to each other. Basis data lived in one spreadsheet, USDA reports in a PDF, futures charts in a browser tab, and market chatter in yet another app.</p>
+        <p>Croploo brings that into one terminal — corn, wheat and soybean basis pulled directly from USDA AMS AgTransport, WASDE and Crop Progress numbers straight from USDA NASS Quick Stats, and CullyAI, a built-in analyst that reads the same data you do and explains what changed and why, instead of another wall of numbers.</p>
+        <h2>Real data, clearly labeled</h2>
+        <p>Every value in the terminal shows its source and its last-updated time on hover. If a data source is weekly instead of daily — like USDA's free basis feed — we say so, instead of interpolating and pretending it's more current than it is. We'd rather show a smaller, honest number of features than fake the rest with placeholder data.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ VALUES ============ -->
+  <section class="section section-alt">
+    <div class="container">
+      <div class="section-head reveal reveal-right">
+        <p class="eyebrow">What we care about</p>
+        <h2>Principles behind the terminal</h2>
+      </div>
+      <div class="value-grid">
+        <div class="value-card reveal reveal-scale">
+          <h3>Real over simulated</h3>
+          <p>If we can't source it from a real feed, we leave it empty rather than fabricate a plausible-looking number.</p>
+        </div>
+        <div class="value-card reveal reveal-scale">
+          <h3>Source transparency</h3>
+          <p>Every figure is traceable to where it came from and when it was last refreshed — no black boxes.</p>
+        </div>
+        <div class="value-card reveal reveal-scale">
+          <h3>Built for traders</h3>
+          <p>Designed around the actual workflow of watching basis, futures and USDA releases — not a generic dashboard.</p>
+        </div>
+        <div class="value-card reveal reveal-scale">
+          <h3>AI that assists, not guesses</h3>
+          <p>CullyAI reasons over numbers we've already computed — it explains the data, it doesn't invent it.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ CTA ============ -->
+  <section class="cta-section">
+    <div class="container cta-inner reveal reveal-pop">
+      <h2>Ready for better trades?</h2>
+      <p>Download Croploo or jump straight into the web app.</p>
+      <a href="index.html#download" class="btn btn-primary"><span class="btn-label">Download now</span></a>
+    </div>
+  </section>
+
+</main>
+
+<!-- ============ FOOTER WIDGET ============ -->
+<footer id="footer-widget" class="site-footer"></footer>
+<script src="js/footer.js"></script>
+
+<script>
+  (function () {
+    var btn = document.getElementById('theme-toggle');
+    if (btn) {
+      btn.addEventListener('click', function () {
+        var current = document.documentElement.getAttribute('data-theme') || 'dark';
+        var next = current === 'dark' ? 'light' : 'dark';
+        document.documentElement.setAttribute('data-theme', next);
+        localStorage.setItem('croploo-theme', next);
+      });
+    }
+    var menuBtn = document.getElementById('menu-toggle');
+    var mobileNav = document.getElementById('mobile-nav');
+    if (menuBtn && mobileNav) {
+      menuBtn.addEventListener('click', function () {
+        var open = mobileNav.classList.toggle('open');
+        menuBtn.classList.toggle('open', open);
+        menuBtn.setAttribute('aria-expanded', String(open));
+      });
+      mobileNav.querySelectorAll('a').forEach(function (a) {
+        a.addEventListener('click', function () {
+          mobileNav.classList.remove('open');
+          menuBtn.classList.remove('open');
+          menuBtn.setAttribute('aria-expanded', 'false');
+        });
+      });
+    }
+  })();
+</script>
+<script src="js/main.js"></script>
+</body>
+</html>

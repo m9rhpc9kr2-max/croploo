@@ -1,0 +1,478 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Croploo — The basis for better trades.</title>
+<meta name="description" content="Croploo is an AI-powered commodity market intelligence terminal for basis, USDA reports, alerts, portfolio and more — for corn, wheat and soybeans." />
+<link rel="icon" href="assets/img/croploo_black.png" type="image/png" />
+<link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+<!-- ============ THEME TOGGLE (persisted in localStorage) ============ -->
+<script>
+  (function () {
+    var saved = localStorage.getItem('croploo-theme');
+    if (saved === 'light' || saved === 'dark') {
+      document.documentElement.setAttribute('data-theme', saved);
+    } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches) {
+      document.documentElement.setAttribute('data-theme', 'light');
+    }
+  })();
+</script>
+
+<div class="blob-field" aria-hidden="true">
+  <span class="blob blob-1"></span>
+  <span class="blob blob-2"></span>
+  <span class="blob blob-3"></span>
+</div>
+
+<!-- ============ NAV ============ -->
+<header class="site-header">
+  <div class="container header-inner">
+    <a href="#top" class="brand">
+      <img src="assets/img/logo_text_white.png" alt="Croploo" class="brand-mark logo-light" />
+      <img src="assets/img/logo_text_black.png" alt="Croploo" class="brand-mark logo-dark" />
+    </a>
+    <nav class="main-nav" aria-label="Main navigation">
+      <a href="#features">Features</a>
+      <a href="#screenshots">Screenshots</a>
+      <a href="#markets">Markets</a>
+      <a href="#sources">Data Sources</a>
+      <a href="#pricing">Pricing</a>
+      <a href="#download" class="nav-cta">Download</a>
+    </nav>
+    <button type="button" id="theme-toggle" class="theme-toggle" aria-label="Toggle color theme">
+      <span class="theme-toggle-track">
+        <span class="theme-toggle-thumb">
+          <svg class="icon-sun" viewBox="0 0 24 24" width="12" height="12" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round"/></svg>
+          <svg class="icon-moon" viewBox="0 0 24 24" width="12" height="12" aria-hidden="true"><path d="M20 14.5A8.5 8.5 0 1 1 9.5 4a7 7 0 0 0 10.5 10.5Z" fill="currentColor"/></svg>
+        </span>
+      </span>
+    </button>
+    <button type="button" class="menu-toggle" id="menu-toggle" aria-label="Open menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+  <nav class="mobile-nav" id="mobile-nav" aria-label="Mobile navigation">
+    <a href="#features">Features</a>
+    <a href="#screenshots">Screenshots</a>
+    <a href="#markets">Markets</a>
+    <a href="#sources">Data Sources</a>
+    <a href="#pricing">Pricing</a>
+    <a href="#download" class="nav-cta">Download</a>
+  </nav>
+</header>
+
+<!-- ============ TICKER TAPE ============ -->
+<div class="ticker-tape" aria-hidden="true">
+  <div class="ticker-track" id="ticker-track"></div>
+</div>
+
+<main id="top">
+
+  <!-- ============ HERO ============ -->
+  <section class="hero">
+    <div class="hero-spotlight"></div>
+    <div class="hero-particles"></div>
+    <div class="container hero-inner">
+      <div class="hero-copy reveal reveal-left in">
+        <p class="eyebrow">AI-Powered Commodity Market Intelligence Terminal</p>
+        <h1>
+          <span class="line" data-text="The basis for">The basis for</span>
+          <span class="line accent" data-text="better trades.">better trades.</span>
+        </h1>
+        <p class="hero-sub">
+          Croploo brings together real basis, futures, USDA and macro data for corn,
+          wheat and soybeans in one terminal — with alerts, portfolio tracking and
+          CullyAI, your built-in AI market analyst.
+        </p>
+        <div class="hero-actions">
+          <a href="downloads/croploo-macos.dmg" class="btn btn-primary" id="hero-primary-download">
+            <span class="btn-label">Download for macOS</span>
+            <svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path d="M8 1v10M8 11 4 7M8 11l4-4M2 14h12" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+          <a href="#download" class="btn btn-ghost" id="hero-recommend-note">
+            <span class="recommend">View all platforms</span>
+          </a>
+        </div>
+        <div class="hero-stats">
+          <div class="hero-stat">
+            <span class="hero-stat-value"><span data-count="1247" data-decimals="0">0</span></span>
+            <span class="hero-stat-label">USDA alerts / month</span>
+          </div>
+          <div class="hero-stat">
+            <span class="hero-stat-value"><span data-count="116" data-decimals="0">0</span></span>
+            <span class="hero-stat-label">Elevators in network</span>
+          </div>
+          <div class="hero-stat">
+            <span class="hero-stat-value"><span data-count="99.95" data-decimals="2">0</span>%</span>
+            <span class="hero-stat-label">Backend uptime</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="hero-visual reveal reveal-right">
+        <img class="hero-usda-image" src="assets/img/screenshots/usda-analyzer.png" alt="Croploo USDA Analyzer" />
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ LOGO / TRUST STRIP ============ -->
+  <section class="trust-strip reveal reveal-scale">
+    <div class="container">
+      <div class="trust-logos">
+        <span>Alpha Vantage</span><span>USDA AMS</span><span>USDA NASS</span><span>EIA</span>
+        <span>CFTC</span><span>NOAA</span><span>Anthropic Claude</span><span>Stripe</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ FEATURES ============ -->
+  <section id="features" class="section">
+    <div class="container">
+      <div class="section-head reveal reveal-left">
+        <p class="eyebrow">What Croploo can do</p>
+        <h2>One terminal, real market data in real time</h2>
+        <p class="section-sub">
+          From weekly basis resolution to an AI analyst that surfaces insights
+          before you ask — Croploo is built for professional commodity traders.
+        </p>
+      </div>
+
+      <div class="feature-grid">
+        <article class="feature-card reveal reveal-scale">
+          <div class="feature-icon">
+            <svg viewBox="0 0 24 24" width="20" height="20"><path d="M3 17l6-6 4 4 8-9" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <h3>Basis Monitor</h3>
+          <p>Cash price minus futures, live per elevator: map, list and chart by state, with source tooltips and CSV export.</p>
+        </article>
+
+        <article class="feature-card reveal reveal-scale">
+          <div class="feature-icon">
+            <svg viewBox="0 0 24 24" width="20" height="20"><path d="M4 4h16v4H4zM4 10h10v10H4zM16 10h4v10h-4z" stroke="currentColor" stroke-width="1.6" fill="none"/></svg>
+          </div>
+          <h3>USDA Reports &amp; WASDE</h3>
+          <p>WASDE and Crop Progress reports built on real NASS numbers, AI analysis, and a WASDE Surprise Tracker with real futures reaction.</p>
+        </article>
+
+        <article class="feature-card reveal reveal-scale">
+          <div class="feature-icon">
+            <svg viewBox="0 0 24 24" width="20" height="20"><path d="M12 2 3 7v6c0 5 4 8 9 9 5-1 9-4 9-9V7l-9-5Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/></svg>
+          </div>
+          <h3>Alerts &amp; Outcome Tracking</h3>
+          <p>Automatic alerts on basis anomalies, futures moves and USDA releases — including a live-computed outcome for every alert.</p>
+        </article>
+
+        <article class="feature-card reveal reveal-scale">
+          <div class="feature-icon">
+            <svg viewBox="0 0 24 24" width="20" height="20"><path d="M5 12h3l2-7 4 14 2-7h3" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <h3>CullyAI</h3>
+          <p>AI chat panel with streaming responses, memory of past sessions, and proactive, unprompted daily insights.</p>
+        </article>
+
+        <article class="feature-card reveal reveal-scale">
+          <div class="feature-icon">
+            <svg viewBox="0 0 24 24" width="20" height="20"><path d="M4 19V5M4 19h16M8 15l3-4 3 2 4-6" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <h3>Market Intel</h3>
+          <p>COT positioning, seasonality, weather, crush/crack/ethanol margins, forward curve and more — all from real sources.</p>
+        </article>
+
+        <article class="feature-card reveal reveal-scale">
+          <div class="feature-icon">
+            <svg viewBox="0 0 24 24" width="20" height="20"><path d="M3 3v18h18M7 15l4-5 3 3 5-7" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <h3>Portfolio &amp; Hedge</h3>
+          <p>Storage positions, P&amp;L, sell-window recommendations and hedge context — computed live from basis, seasonality and COT data.</p>
+        </article>
+
+        <article class="feature-card reveal reveal-scale">
+          <div class="feature-icon">
+            <svg viewBox="0 0 24 24" width="20" height="20"><rect x="3" y="3" width="8" height="8" rx="1" stroke="currentColor" stroke-width="1.6" fill="none"/><rect x="13" y="3" width="8" height="8" rx="1" stroke="currentColor" stroke-width="1.6" fill="none"/><rect x="3" y="13" width="8" height="8" rx="1" stroke="currentColor" stroke-width="1.6" fill="none"/><rect x="13" y="13" width="8" height="8" rx="1" stroke="currentColor" stroke-width="1.6" fill="none"/></svg>
+          </div>
+          <h3>Custom Dashboards</h3>
+          <p>Assemble and save your own widget layouts — plus Cross-Asset Synthesis from dollar, oil, yield curve and WASDE.</p>
+        </article>
+
+        <article class="feature-card reveal reveal-scale">
+          <div class="feature-icon">
+            <svg viewBox="0 0 24 24" width="20" height="20"><path d="M12 3v18M3 12h18" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.6" fill="none"/></svg>
+          </div>
+          <h3>Public API</h3>
+          <p>Programmatic access to basis, futures and USDA data via API key — for Desk and Institutional tiers.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ SCREENSHOTS (scroll-pinned gallery) ============ -->
+  <section id="screenshots" class="section section-alt screenshots-section">
+    <div class="container container-wide">
+      <div class="pin-gallery">
+        <div class="pin-track">
+          <div class="pin-stage">
+            <figure class="screenshot-card">
+              <img src="assets/img/screenshots/dashboard.png" alt="Croploo Dashboard screenshot" loading="lazy" />
+              <div class="screenshot-copy">
+                <span>Dashboard</span>
+                <strong>Everything that moves your market, in one view.</strong>
+              </div>
+            </figure>
+          </div>
+        </div>
+
+        <div class="pin-track">
+          <div class="pin-stage">
+            <figure class="screenshot-card">
+              <img src="assets/img/screenshots/market-intel.png" alt="Croploo Market Intel screenshot" loading="lazy" />
+              <div class="screenshot-copy">
+                <span>Market Intel</span>
+                <strong>Positioning, seasonality and signals that matter.</strong>
+              </div>
+            </figure>
+          </div>
+        </div>
+
+        <div class="pin-track">
+          <div class="pin-stage">
+            <figure class="screenshot-card">
+              <img src="assets/img/screenshots/markets.png" alt="Croploo Markets screenshot" loading="lazy" />
+              <div class="screenshot-copy">
+                <span>Markets</span>
+                <strong>See the wider market before you make the trade.</strong>
+              </div>
+            </figure>
+          </div>
+        </div>
+
+        <div class="pin-track">
+          <div class="pin-stage">
+            <figure class="screenshot-card">
+              <img src="assets/img/screenshots/freight.png" alt="Croploo Freight screenshot" loading="lazy" />
+              <div class="screenshot-copy">
+                <span>Freight</span>
+                <strong>Follow the rates behind every basis move.</strong>
+              </div>
+            </figure>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ MARKETS ============ -->
+  <section id="markets" class="section">
+    <div class="container">
+      <div class="section-head reveal reveal-left">
+        <p class="eyebrow">Markets &amp; Analytics</p>
+        <h2>Far more than agricultural futures</h2>
+        <p class="section-sub">
+          Forex, crypto, treasury curve, sector heatmap, stocks and macro indicators —
+          all in the same terminal, so the bigger picture stays visible.
+        </p>
+      </div>
+      <div class="markets-grid">
+        <div class="market-chip reveal reveal-scale"><span class="m-name">Forex Terminal</span><span class="m-desc">Major pairs in real time</span></div>
+        <div class="market-chip reveal reveal-scale"><span class="m-name">Crypto</span><span class="m-desc">BTC/ETH as a risk-on proxy</span></div>
+        <div class="market-chip reveal reveal-scale"><span class="m-name">Treasury Yield Curve</span><span class="m-desc">2y/10y/30y, inversion badge</span></div>
+        <div class="market-chip reveal reveal-scale"><span class="m-name">Sector Heatmap</span><span class="m-desc">S&amp;P sector ETFs</span></div>
+        <div class="market-chip reveal reveal-scale"><span class="m-name">Relative Value Screener</span><span class="m-desc">Corn/Wheat/Soy ratios</span></div>
+        <div class="market-chip reveal reveal-scale"><span class="m-name">Volatility Monitor</span><span class="m-desc">Realized vol per symbol</span></div>
+        <div class="market-chip reveal reveal-scale"><span class="m-name">Economic Indicators</span><span class="m-desc">CPI, Fed Funds, and more (FRED)</span></div>
+        <div class="market-chip reveal reveal-scale"><span class="m-name">News Terminal</span><span class="m-desc">Agri &amp; macro headlines</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ DOWNLOAD ============ -->
+  <section id="download" class="section section-alt">
+    <div class="container">
+      <div class="section-head reveal reveal-right">
+        <p class="eyebrow">Available for</p>
+        <h2>On any desktop, ready anywhere</h2>
+        <p class="section-sub">Native builds for Windows, macOS and Linux.</p>
+      </div>
+
+      <div class="platform-grid">
+        <a href="downloads/croploo-windows-setup.exe" class="platform-card reveal reveal-scale" data-platform="windows">
+          <span class="platform-badge">Recommended for you</span>
+          <div class="platform-icon">
+            <svg viewBox="0 0 24 24" width="26" height="26"><path d="M3 5.5 11 4.3v7.2H3zM12 4.2 21 3v8.5h-9zM3 12.5h8v7.2L3 18.5zM12 12.5h9V21l-9-1.2z" fill="currentColor"/></svg>
+          </div>
+          <h3>Windows</h3>
+          <p>Setup .exe for Windows 10/11 (64-bit)</p>
+          <span class="platform-cta">Download <svg viewBox="0 0 16 16" width="12" height="12"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        </a>
+
+        <a href="downloads/croploo-macos.dmg" class="platform-card reveal reveal-scale" data-platform="macos">
+          <span class="platform-badge">Recommended for you</span>
+          <div class="platform-icon">
+            <svg viewBox="0 0 24 24" width="26" height="26"><path d="M16.7 12.5c0-2.4 2-3.6 2.1-3.7-1.1-1.7-2.9-1.9-3.5-1.9-1.5-.2-2.9.9-3.6.9-.7 0-1.9-.9-3.1-.8-1.6 0-3.1.9-3.9 2.4-1.7 2.9-.4 7.2 1.2 9.6.8 1.1 1.7 2.4 3 2.4 1.2 0 1.6-.8 3.1-.8s1.9.8 3.1.7c1.3 0 2.1-1.2 2.9-2.3.9-1.3 1.3-2.6 1.3-2.6-.1 0-2.6-1-2.6-3.9ZM14.6 5.1c.6-.8 1.1-1.9.9-3.1-1 0-2.2.7-2.9 1.5-.6.7-1.2 1.9-1 3 1.1.1 2.3-.6 3-1.4Z" fill="currentColor"/></svg>
+          </div>
+          <h3>macOS</h3>
+          <p>.dmg for Apple Silicon &amp; Intel</p>
+          <span class="platform-cta">Download <svg viewBox="0 0 16 16" width="12" height="12"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        </a>
+
+        <a href="downloads/croploo-linux.AppImage" class="platform-card reveal reveal-scale" data-platform="linux">
+          <span class="platform-badge">Recommended for you</span>
+          <div class="platform-icon">
+            <svg viewBox="0 0 24 24" width="26" height="26" aria-hidden="true">
+              <path fill="currentColor" d="M12 2.4c-2.4 0-4.3 2.1-4.3 4.7 0 1.05.32 2.02.87 2.82C6.5 11.05 5 13.45 5 16.2 5 20.06 8.13 23 12 23s7-2.94 7-6.8c0-2.75-1.5-5.15-3.57-6.28.55-.8.87-1.77.87-2.82 0-2.6-1.9-4.7-4.3-4.7Z"/>
+              <ellipse cx="9.85" cy="8.55" rx="0.95" ry="1.15" fill="var(--bg)"/>
+              <ellipse cx="14.15" cy="8.55" rx="0.95" ry="1.15" fill="var(--bg)"/>
+              <path d="M11 10.6h2l-1 1.4Z" fill="#f2c96d"/>
+              <ellipse cx="12" cy="16.6" rx="3.4" ry="4.9" fill="var(--bg)"/>
+              <ellipse cx="8.4" cy="21.6" rx="1.7" ry="0.75" fill="#f2c96d"/>
+              <ellipse cx="15.6" cy="21.6" rx="1.7" ry="0.75" fill="#f2c96d"/>
+            </svg>
+          </div>
+          <h3>Linux</h3>
+          <p>.AppImage, runs on most distros</p>
+          <span class="platform-cta">Download <svg viewBox="0 0 16 16" width="12" height="12"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        </a>
+      </div>
+
+      <p class="security-note reveal">
+        <svg viewBox="0 0 24 24" width="14" height="14"><path d="M12 2 4 5v6c0 5.5 3.8 8.5 8 11 4.2-2.5 8-5.5 8-11V5l-8-3Z" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linejoin="round"/><path d="M9 12l2 2 4-4" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        All installers are signed with SHA-256 checksums, available on the corresponding release page.
+      </p>
+    </div>
+  </section>
+
+  <!-- ============ DATA SOURCES ============ -->
+  <section id="sources" class="section">
+    <div class="container">
+      <div class="section-head reveal reveal-left">
+        <p class="eyebrow">Transparency</p>
+        <h2>Real data, clearly labeled</h2>
+        <p class="section-sub">Every value in the terminal shows its source and last-updated time on hover.</p>
+      </div>
+    </div>
+    <div class="sources-marquee">
+      <div class="sources-track">
+        <span class="source-chip">Alpha Vantage — Futures</span>
+        <span class="source-chip">USDA AMS AgTransport — Basis</span>
+        <span class="source-chip">USDA NASS Quick Stats — Crop Data</span>
+        <span class="source-chip">EIA — Diesel &amp; Energy</span>
+        <span class="source-chip">CFTC — Commitments of Traders</span>
+        <span class="source-chip">NOAA NCEI — Weather</span>
+        <span class="source-chip">Yahoo Finance — Forex, Crypto, Yields</span>
+        <span class="source-chip">FRED — Economic Indicators</span>
+        <span class="source-chip">Financial Modeling Prep — Earnings &amp; News</span>
+        <span class="source-chip">Anthropic Claude — CullyAI</span>
+        <span class="source-chip">Alpha Vantage — Futures</span>
+        <span class="source-chip">USDA AMS AgTransport — Basis</span>
+        <span class="source-chip">USDA NASS Quick Stats — Crop Data</span>
+        <span class="source-chip">EIA — Diesel &amp; Energy</span>
+        <span class="source-chip">CFTC — Commitments of Traders</span>
+        <span class="source-chip">NOAA NCEI — Weather</span>
+        <span class="source-chip">Yahoo Finance — Forex, Crypto, Yields</span>
+        <span class="source-chip">FRED — Economic Indicators</span>
+        <span class="source-chip">Financial Modeling Prep — Earnings &amp; News</span>
+        <span class="source-chip">Anthropic Claude — CullyAI</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ PRICING ============ -->
+  <section id="pricing" class="section section-alt">
+    <div class="container">
+      <div class="section-head reveal reveal-right">
+        <p class="eyebrow">Pricing</p>
+        <h2>For desks of every size</h2>
+        <p class="section-sub">Try Pro free for 14 days, no credit card required.</p>
+      </div>
+      <div class="pricing-grid">
+        <div class="price-card reveal reveal-scale">
+          <h3>Basic</h3>
+          <p class="price">$19<span>/month</span></p>
+          <ul>
+            <li>1 seat</li>
+            <li>Basis Monitor &amp; USDA Reports</li>
+            <li>Alerts</li>
+          </ul>
+        </div>
+        <div class="price-card reveal reveal-pop featured">
+          <span class="price-badge">14 days free</span>
+          <h3>Pro</h3>
+          <p class="price">$49<span>/month</span></p>
+          <ul>
+            <li>1 seat</li>
+            <li>Market Intel &amp; Freight Rates</li>
+            <li>CullyAI chat</li>
+          </ul>
+        </div>
+        <div class="price-card reveal reveal-scale">
+          <h3>Desk</h3>
+          <p class="price">$99<span>/month</span></p>
+          <ul>
+            <li>1 seat</li>
+            <li>Public API &amp; API keys</li>
+            <li>All Pro features</li>
+          </ul>
+        </div>
+        <div class="price-card reveal reveal-scale">
+          <h3>Team</h3>
+          <p class="price">$399<span>/month</span></p>
+          <ul>
+            <li>5 seats</li>
+            <li>API access</li>
+            <li>Shared quota</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ CTA ============ -->
+  <section class="cta-section">
+    <div class="container cta-inner reveal reveal-pop">
+      <h2>Ready for better trades?</h2>
+      <p>Download Croploo or jump straight into the web app.</p>
+      <a href="#download" class="btn btn-primary"><span class="btn-label">Download now</span></a>
+    </div>
+  </section>
+
+</main>
+
+<!-- ============ FOOTER WIDGET ============ -->
+<footer id="footer-widget" class="site-footer"></footer>
+<script src="js/footer.js"></script>
+
+<script>
+  (function () {
+    var btn = document.getElementById('theme-toggle');
+    if (btn) {
+      btn.addEventListener('click', function () {
+        var current = document.documentElement.getAttribute('data-theme') || 'dark';
+        var next = current === 'dark' ? 'light' : 'dark';
+        document.documentElement.setAttribute('data-theme', next);
+        localStorage.setItem('croploo-theme', next);
+      });
+    }
+    var menuBtn = document.getElementById('menu-toggle');
+    var mobileNav = document.getElementById('mobile-nav');
+    if (menuBtn && mobileNav) {
+      menuBtn.addEventListener('click', function () {
+        var open = mobileNav.classList.toggle('open');
+        menuBtn.classList.toggle('open', open);
+        menuBtn.setAttribute('aria-expanded', String(open));
+      });
+      mobileNav.querySelectorAll('a').forEach(function (a) {
+        a.addEventListener('click', function () {
+          mobileNav.classList.remove('open');
+          menuBtn.classList.remove('open');
+          menuBtn.setAttribute('aria-expanded', 'false');
+        });
+      });
+    }
+  })();
+</script>
+<script src="js/main.js"></script>
+</body>
+</html>
