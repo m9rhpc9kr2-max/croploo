@@ -73,7 +73,9 @@ find_iscc() {
 ISCC_BIN=$(find_iscc || true)
 if [[ -n "$ISCC_BIN" ]]; then
   echo "==> Building Windows installer with Inno Setup..."
-  "$ISCC_BIN" "/DAppVersion=$VERSION" windows/installer.iss
+  # MSYS_NO_PATHCONV avoids Git Bash mangling "/DAppVersion=..." into a
+  # drive-letter path (e.g. "D:AppVersion=...") before ISCC sees it.
+  MSYS_NO_PATHCONV=1 "$ISCC_BIN" "/DAppVersion=$VERSION" windows/installer.iss
   echo "==> Created ${DIST_DIR}/${APP_NAME}-windows-setup.exe"
 else
   echo "Warning: Inno Setup (iscc) not found, skipping installer .exe (only the zip will be created)." >&2
