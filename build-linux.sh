@@ -1,8 +1,9 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-# Build a release .tar.gz containing the Linux bundle.
-# Must run on Linux.
+# Build a release .tar.gz (and AppImage) containing the Linux bundle.
+# On a Linux host this builds locally. On macOS/Windows it automatically
+# triggers just the Linux build on GitHub Actions instead (requires gh CLI).
 
 cd "$(dirname "$0")"
 
@@ -10,12 +11,22 @@ APP_NAME="croploo"
 VERSION=$(grep "^version:" pubspec.yaml | head -1 | awk '{print $2}' | cut -d'+' -f1)
 DIST_DIR="dist"
 
-mkdir -p "$DIST_DIR"
-
 if [[ "$(uname -s)" != "Linux" ]]; then
-  echo "Error: Linux build must run on Linux." >&2
-  exit 1
+  if ! command -v gh >/dev/null 2>&1; then
+    echo "Error: Linux build must run on Linux." >&2
+    echo "On macOS/Windows, this script needs the GitHub CLI (gh) to trigger a remote build." >&2
+    echo "Install it from https://cli.github.com/" >&2
+    exit 1
+  fi
+
+  CURRENT_BRANCH=$(git branch --show-current 2>/dev/null || echo "main")
+  echo "==> Not on Linux: triggering remote Linux build on GitHub Actions..."
+  gh workflow run build-desktop.yml --ref "$CURRENT_BRANCH" -f platform=linux
+  echo "==> Build triggered. Download the artifact from GitHub Actions when it completes."
+  exit 0
 fi
+
+mkdir -p "$DIST_DIR"
 
 echo "==> Building Linux release..."
 flutter build linux --release

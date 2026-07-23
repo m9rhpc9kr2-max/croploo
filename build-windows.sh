@@ -29,7 +29,7 @@ if [[ "$(uname -s)" != "Windows_NT" ]] && [[ "$(uname -s)" != "MINGW"* ]] && [[ 
 
   CURRENT_BRANCH=$(git branch --show-current 2>/dev/null || echo "main")
   echo "==> Not on Windows: triggering remote Windows build on GitHub Actions..."
-  gh workflow run build-desktop.yml --ref "$CURRENT_BRANCH"
+  gh workflow run build-desktop.yml --ref "$CURRENT_BRANCH" -f platform=windows
   echo "==> Build triggered. Download the artifact from GitHub Actions when it completes."
   exit 0
 fi
