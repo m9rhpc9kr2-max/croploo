@@ -48,8 +48,10 @@ app.*.map.json
 /android/app/profile
 /android/app/release
 
-# Release build outputs
+# Release build outputs (published to GitHub Releases, not committed)
 /dist/
+/website/downloads/*
+!/website/downloads/.gitkeep
 
 # Node
 node_modules/

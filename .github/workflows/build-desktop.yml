@@ -89,62 +89,39 @@ jobs:
             dist/croploo-linux-*.tar.gz
             dist/croploo-linux.AppImage
 
-  publish-downloads:
+  # Firebase Hosting's free (Spark) plan refuses to serve executable files
+  # (.exe, .AppImage), so binaries are published as GitHub Release assets
+  # instead and the website only links out to them.
+  release-latest:
+    needs: [build-macos, build-windows, build-linux]
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          path: artifacts
+
+      - name: Rename builds to stable filenames
+        run: |
+          mkdir -p release-assets
+          cp artifacts/croploo-macos/croploo-macos-*.dmg release-assets/croploo-macos.dmg
+          cp artifacts/croploo-windows/croploo-windows-setup.exe release-assets/croploo-windows-setup.exe
+          cp artifacts/croploo-linux/croploo-linux.AppImage release-assets/croploo-linux.AppImage
+
+      - name: Update "latest" GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: latest
+          name: "Latest build (main)"
+          prerelease: true
+          files: release-assets/*
+
+  deploy-website:
     needs: [build-macos, build-windows, build-linux]
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/main'
     steps:
       - uses: actions/checkout@v4
-
-      - name: Download artifacts
-        uses: actions/download-artifact@v4
-        with:
-          path: artifacts
-
-      - name: Copy builds into website/downloads with stable names
-        run: |
-          mkdir -p website/downloads
-          cp artifacts/croploo-macos/croploo-macos-*.dmg website/downloads/croploo-macos.dmg
-
-          WIN_SETUP=$(ls artifacts/croploo-windows/croploo-windows-setup.exe 2>/dev/null | head -1 || true)
-          if [[ -n "$WIN_SETUP" ]]; then
-            cp "$WIN_SETUP" website/downloads/croploo-windows-setup.exe
-          else
-            echo "Warning: no Windows installer .exe found in artifacts." >&2
-          fi
-
-          LINUX_APPIMAGE=$(ls artifacts/croploo-linux/croploo-linux.AppImage 2>/dev/null | head -1 || true)
-          if [[ -n "$LINUX_APPIMAGE" ]]; then
-            cp "$LINUX_APPIMAGE" website/downloads/croploo-linux.AppImage
-          else
-            echo "Warning: no Linux AppImage found in artifacts." >&2
-          fi
-
-      - name: Commit and push updated downloads
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add website/downloads
-          if git diff --cached --quiet; then
-            echo "No changes to downloads"
-          else
-            git commit -m "chore: update website downloads [skip ci]"
-            for i in 1 2 3 4 5; do
-              git push && break
-              echo "Push rejected, rebasing onto latest main (attempt $i)..."
-              git fetch origin main
-              git rebase origin/main
-            done
-          fi
-
-  deploy-website:
-    needs: publish-downloads
-    runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/main'
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          ref: main
 
       - name: Deploy to Firebase Hosting
         uses: FirebaseExtended/action-hosting-deploy@v0
