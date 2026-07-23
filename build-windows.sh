@@ -2,8 +2,8 @@
 set -euo pipefail
 
 # Build a release .zip containing the Windows .exe and its data folder.
-# On a Windows host this builds locally. On macOS/Linux it can trigger the
-# GitHub Actions Windows build with the --remote flag (requires gh CLI).
+# On a Windows host this builds locally. On macOS/Linux it automatically
+# triggers the GitHub Actions Windows build instead (requires gh CLI).
 
 cd "$(dirname "$0")"
 
@@ -11,43 +11,27 @@ APP_NAME="croploo"
 VERSION=$(grep "^version:" pubspec.yaml | head -1 | awk '{print $2}' | cut -d'+' -f1)
 DIST_DIR="dist"
 
-REMOTE=false
 for arg in "$@"; do
   case "$arg" in
-    --remote) REMOTE=true ;;
+    --remote) ;; # kept for backwards compatibility; remote build is now automatic
     *) echo "Unknown option: $arg" >&2; exit 1 ;;
   esac
 done
 
 # Flutter's Windows target can only be built on Windows.
 if [[ "$(uname -s)" != "Windows_NT" ]] && [[ "$(uname -s)" != "MINGW"* ]] && [[ "$(uname -s)" != "CYGWIN"* ]]; then
-  if [[ "$REMOTE" == true ]]; then
-    if ! command -v gh >/dev/null 2>&1; then
-      echo "Error: --remote requires the GitHub CLI (gh)." >&2
-      echo "Install it from https://cli.github.com/" >&2
-      exit 1
-    fi
-
-    CURRENT_BRANCH=$(git branch --show-current 2>/dev/null || echo "main")
-    echo "==> Triggering remote Windows build on GitHub Actions..."
-    gh workflow run build-desktop.yml --ref "$CURRENT_BRANCH"
-    echo "==> Build triggered. Download the artifact from GitHub Actions when it completes."
-    exit 0
+  if ! command -v gh >/dev/null 2>&1; then
+    echo "Error: Windows release must be built on a Windows host." >&2
+    echo "On macOS/Linux, this script needs the GitHub CLI (gh) to trigger a remote build." >&2
+    echo "Install it from https://cli.github.com/" >&2
+    exit 1
   fi
 
-  echo "Error: Windows release must be built on a Windows host." >&2
-  echo "Options:" >&2
-  echo "  1. Run this script on Windows." >&2
-  echo "  2. Run this script on macOS/Linux with --remote to trigger a GitHub Actions build:" >&2
-  echo "       ./build-windows.sh --remote" >&2
-
-  if command -v gh >/dev/null 2>&1; then
-    echo "     (gh CLI detected, so --remote is available)" >&2
-  else
-    echo "     (install gh CLI to use --remote: https://cli.github.com/)" >&2
-  fi
-
-  exit 1
+  CURRENT_BRANCH=$(git branch --show-current 2>/dev/null || echo "main")
+  echo "==> Not on Windows: triggering remote Windows build on GitHub Actions..."
+  gh workflow run build-desktop.yml --ref "$CURRENT_BRANCH"
+  echo "==> Build triggered. Download the artifact from GitHub Actions when it completes."
+  exit 0
 fi
 
 mkdir -p "$DIST_DIR"
