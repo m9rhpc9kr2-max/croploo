@@ -43,6 +43,9 @@ jobs:
           channel: stable
           flutter-version: '3.41.9'
 
+      - name: Install Inno Setup
+        run: choco install innosetup -y
+
       - name: Build Windows release
         shell: bash
         run: ./build-windows.sh
@@ -61,7 +64,13 @@ jobs:
       - name: Install Linux build dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y clang cmake ninja-build pkg-config libgtk-3-dev liblzma-dev libnotify-dev
+          sudo apt-get install -y clang cmake ninja-build pkg-config libgtk-3-dev liblzma-dev libnotify-dev libfuse2
+
+      - name: Install appimagetool
+        run: |
+          curl -L -o /usr/local/bin/appimagetool \
+            "https://github.com/AppImage/AppImageKit/releases/download/continuous/appimagetool-x86_64.AppImage"
+          chmod +x /usr/local/bin/appimagetool
 
       - name: Install Flutter
         uses: subosito/flutter-action@v2
@@ -76,7 +85,9 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: croploo-linux
-          path: dist/croploo-linux-*.tar.gz
+          path: |
+            dist/croploo-linux-*.tar.gz
+            dist/croploo-linux.AppImage
 
   publish-downloads:
     needs: [build-macos, build-windows, build-linux]
@@ -94,11 +105,20 @@ jobs:
         run: |
           mkdir -p website/downloads
           cp artifacts/croploo-macos/croploo-macos-*.dmg website/downloads/croploo-macos.dmg
-          WIN_ZIP=$(ls artifacts/croploo-windows/croploo-windows-*.zip 2>/dev/null | head -1 || true)
-          if [[ -n "$WIN_ZIP" ]]; then
-            cp "$WIN_ZIP" website/downloads/croploo-windows.zip
+
+          WIN_SETUP=$(ls artifacts/croploo-windows/croploo-windows-setup.exe 2>/dev/null | head -1 || true)
+          if [[ -n "$WIN_SETUP" ]]; then
+            cp "$WIN_SETUP" website/downloads/croploo-windows-setup.exe
+          else
+            echo "Warning: no Windows installer .exe found in artifacts." >&2
           fi
-          cp artifacts/croploo-linux/croploo-linux-*.tar.gz website/downloads/croploo-linux.tar.gz
+
+          LINUX_APPIMAGE=$(ls artifacts/croploo-linux/croploo-linux.AppImage 2>/dev/null | head -1 || true)
+          if [[ -n "$LINUX_APPIMAGE" ]]; then
+            cp "$LINUX_APPIMAGE" website/downloads/croploo-linux.AppImage
+          else
+            echo "Warning: no Linux AppImage found in artifacts." >&2
+          fi
 
       - name: Commit and push updated downloads
         run: |

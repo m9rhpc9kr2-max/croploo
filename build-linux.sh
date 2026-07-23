@@ -35,3 +35,41 @@ tar -czf "$TAR_PATH" -C "$BUNDLE_DIR" .
 
 echo "==> Created ${TAR_PATH}"
 echo "    Executable: ${BUNDLE_DIR}/${APP_NAME}"
+
+# Package an AppImage too, if appimagetool is available.
+APPIMAGETOOL="$(command -v appimagetool || true)"
+if [[ -n "$APPIMAGETOOL" ]]; then
+  echo "==> Building AppImage..."
+
+  APPDIR=$(mktemp -d)
+  mkdir -p "${APPDIR}/usr/bin"
+  cp -R "${BUNDLE_DIR}/." "${APPDIR}/usr/bin/"
+  cp linux/packaging/croploo.png "${APPDIR}/croploo.png"
+
+  {
+    echo '#!/bin/sh'
+    echo 'HERE="$(dirname "$(readlink -f "$0")")"'
+    echo "exec \"\${HERE}/usr/bin/${APP_NAME}\" \"\$@\""
+  } > "${APPDIR}/AppRun"
+  chmod +x "${APPDIR}/AppRun"
+
+  cat > "${APPDIR}/${APP_NAME}.desktop" <<DESKTOP
+[Desktop Entry]
+Type=Application
+Name=Croploo
+Exec=${APP_NAME}
+Icon=croploo
+Categories=Office;Finance;
+DESKTOP
+
+  APPIMAGE_NAME="${APP_NAME}-linux.AppImage"
+  APPIMAGE_PATH="${DIST_DIR}/${APPIMAGE_NAME}"
+  rm -f "$APPIMAGE_PATH"
+
+  ARCH=x86_64 "$APPIMAGETOOL" --appimage-extract-and-run "$APPDIR" "$APPIMAGE_PATH"
+  rm -rf "$APPDIR"
+
+  echo "==> Created ${APPIMAGE_PATH}"
+else
+  echo "Warning: appimagetool not found, skipping AppImage (only the tar.gz was created)." >&2
+fi

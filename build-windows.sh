@@ -54,6 +54,31 @@ if [[ ! -f "$EXE_PATH" ]]; then
   exit 1
 fi
 
+find_iscc() {
+  if command -v iscc >/dev/null 2>&1; then
+    command -v iscc
+    return
+  fi
+  for candidate in \
+    "/c/Program Files (x86)/Inno Setup 6/ISCC.exe" \
+    "/c/Program Files/Inno Setup 6/ISCC.exe"
+  do
+    if [[ -f "$candidate" ]]; then
+      echo "$candidate"
+      return
+    fi
+  done
+}
+
+ISCC_BIN=$(find_iscc || true)
+if [[ -n "$ISCC_BIN" ]]; then
+  echo "==> Building Windows installer with Inno Setup..."
+  "$ISCC_BIN" "/DAppVersion=$VERSION" windows/installer.iss
+  echo "==> Created ${DIST_DIR}/${APP_NAME}-windows-setup.exe"
+else
+  echo "Warning: Inno Setup (iscc) not found, skipping installer .exe (only the zip will be created)." >&2
+fi
+
 ZIP_NAME="${APP_NAME}-windows-${VERSION}.zip"
 ZIP_PATH="${DIST_DIR}/${ZIP_NAME}"
 rm -f "$ZIP_PATH"
